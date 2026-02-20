@@ -1,0 +1,84 @@
+students = []
+courses = []
+
+def add_student(name, age, gender, student_id):
+    student = {
+        'name': name,
+        'age': age,
+        'gender': gender,
+        'student_id': student_id,
+        'courses': [],
+        'grades': {}
+    }
+    students.append(student)
+    return student
+
+def find_student(student_id):
+    for student in students:
+        if student['student_id'] == student_id:
+            return student
+    return None
+
+def enroll_in_course(student_id, course_name):
+    student = find_student(student_id)
+    if student and course_name not in student['courses']:
+        student['courses'].append(course_name)
+
+def add_grade(student_id, course_name, grade):
+    student = find_student(student_id)
+    if student:
+        student['grades'][course_name] = grade
+
+def print_student(student_id):
+    student = find_student(student_id)
+    if student:
+        print(f"ID: {student['student_id']}, Name: {student['name']}, Age: {student['age']}, Gender: {student['gender']}")
+        print(f"Courses: {student['courses']}")
+        print(f"Grades: {student['grades']}")
+
+
+name = input("Enter student name: ")
+age = int(input("Enter student age: "))
+gender = input("Enter student gender: ")
+student_id = input("Enter student ID: ")
+add_student(name, age, gender, student_id)
+
+name = input("Enter student name: ")
+age = int(input("Enter student age: "))
+gender = input("Enter student gender: ")
+student_id = input("Enter student ID: ")
+add_student(name, age, gender, student_id)
+
+student_id = input("Enter student ID to enroll: ")
+course_name = input("Enter course name: ")
+enroll_in_course(student_id, course_name)
+
+student_id = input("Enter student ID to enroll: ")
+course_name = input("Enter course name: ")
+enroll_in_course(student_id, course_name)
+
+student_id = input("Enter student ID to enroll: ")
+course_name = input("Enter course name: ")
+enroll_in_course(student_id, course_name)
+
+student_id = input("Enter student ID for grade: ")
+course_name = input("Enter course name: ")
+grade = input("Enter grade: ")
+add_grade(student_id, course_name, grade)
+
+student_id = input("Enter student ID for grade: ")
+course_name = input("Enter course name: ")
+grade = input("Enter grade: ")
+add_grade(student_id, course_name, grade)
+
+student_id = input("Enter student ID for grade: ")
+course_name = input("Enter course name: ")
+grade = input("Enter grade: ")
+add_grade(student_id, course_name, grade)
+
+student_id = input("Enter student ID to print: ")
+print_student(student_id)
+print()
+
+student_id = input("Enter student ID to print: ")
+print_student(student_id)  

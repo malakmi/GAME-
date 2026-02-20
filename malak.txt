@@ -1,0 +1,166 @@
+--------(get average)-----------
+.data
+arr: .word 1,2,3,4,5,6,7,8,9,10
+.text
+	la $s0,arr
+	add $t7,$s0,$0 #t7=s0
+	add $s2,$0,$0 #s2=0(avg)
+	add $t1,$0,$0 #i=0
+	addi $t2,$0,10 #n=11
+	loop:slt $t0,$t1,$t2
+	beq $t0,$0,terminate
+	lw $t3,0($t7) #t3=x
+	add $s2,$s2,$t3#avg+=x
+	addi $t7,$t7,4#t7+=4
+	addi $t1,$t1,1#i+=1
+	j loop
+	terminate:
+	div $s2,$s2,$t2
+	li $v0,1
+	move $a0,$s2
+	syscall
+---------(get sum)--------------
+.data:
+arr: .word 1,2,3,4,5
+.text:
+la $s0,arr
+add $t7,$s0,$0#t7=s0
+add $s1,$0,$0#s1(sum)=0
+add $s3,$0,$0#s3(i)=0
+addi $s4,$0,5 # s4(n)=5
+loop:slt $t0,$s3,$s4
+beq $t0,$0,terminate 
+lw $t3,0($t7)
+add $s1,$s1,$t3
+addi $t7,$t7,4
+addi $s3,$s3,1
+j loop
+terminate:
+li $v0,1
+move $a0,$s1
+syscall
+---------(add two numbers)------------
+.data:
+num1:.word 2
+num2:.word 3
+.text:
+lw $s1,num1
+lw $s2,num2
+add $s3,$s1,$s2
+li $v0,1
+move $a0,$s3
+syscall
+-------(get max)------------------------
+.data:
+num1:.word 2
+num2:.word 3
+num3:.word 10
+.text:
+lw $s1,num1
+lw $s2,num2
+lw $s3,num3
+add $s0,$s1,$0
+slt $t0,$s0,$s2
+beq $t0,$0,label
+add $s0,$0,$s2
+
+label:
+slt $t0,$s0,$s3
+beq $t0,$0,label1
+add $s0,$0,$s3
+
+label1:
+li $v0,1
+move $a0,$s0
+syscall
+-------(reverse string)-----------------
+.data:
+array1:.asciiz "help"
+array2:.space 4
+.text:
+la $t1,array1#pointer on the first element on the array1
+la $t2,array2 #pointer on the first element on the array2
+addi $t3,$t1,3 #counter on lst element of the array1
+addi $t4,$0,4 #i=4
+#for (int i=4;i>0;i--)
+loop : slt $t0,$0,$t4
+beq $t0,$0,terminate
+lb $t5,0($t3)
+sb $t5,0($t2)
+addi $t3,$t3,-1
+addi $t4,$t4,-1
+addi $t2,$t2,1
+j loop
+terminate:
+li $v0,4
+la $a0,array2
+syscall
+-------------(get age)----------------------
+.data:
+str1:.asciiz "Enter ur age : "
+str2:.asciiz "\nur age is : "
+.text:
+li $v0,4
+la $a0,str1
+syscall
+li $v0,5
+syscall
+move $t0,$v0
+li $v0,4
+la $a0,str2
+syscall
+li $v0,1
+move $a0,$t0
+syscall
+-----------(get factorial)--------------------
+.data:
+num1:.word 5
+.text:
+lw $s3,num1
+addi $s2,$s3,1
+addi $s1,$0,1
+addi $s0,$0,1
+loop : slt $t0,$s1,$s2
+beq $t0,$0,terminate
+mul $s0,$s0,$s1
+addi $s1,$s1,1
+j loop
+terminate:
+li $v0,1
+move $a0,$s0
+syscall
+---------(java code)---------------------------
+.data:
+array:.word 1 2 3 4 5
+.text:
+la $s0,array
+add $t7,$s0,$0
+addi $s3,$0,1
+add $s1,$0,$0
+addi $s2,$0,5
+loop : slt $t0,$s1,$s2
+beq $t0,$0,terminate
+lw $t3,0($t7)
+mul $s3,$s3,$t3
+addi $t7,$t7,4
+addi $s1,$s1,1
+j loop
+terminate:
+-----------(sum of squares)--------------------
+.data:
+array:.word 1 2 3 4 5
+.text:
+la $s0,array
+add $t7,$s0,$0 # t7=s0
+addi $s3,$0,0 #res
+add $s1,$0,$0 #i
+addi $s2,$0,5 #n
+loop : slt $t0,$s1,$s2
+beq $t0,$0,terminate
+lw $t3,0($t7)
+mul $t3,$t3,$t3
+add $s3,$s3,$t3
+addi $t7,$t7,4
+addi $s1,$s1,1
+j loop
+terminate:
